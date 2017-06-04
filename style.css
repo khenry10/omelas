@@ -1,0 +1,52 @@
+/** {
+  background-color: white;
+}*/
+
+.list-header {
+  background-color: #6464DA;
+  color: white;
+  height: 67px;
+}
+
+.left-header {
+  /*color: #4264fb;*/
+  color: white;
+  /*margin-top: -10px;*/
+  margin-left: 10px;
+}
+
+.searchBox {
+  width: 250px;
+  height:35px;
+  margin-top: 10px;
+  margin-right: 75px;
+  background-color: #6464DA;
+  color: white;
+  border-bottom: 3px solid white;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+  font-size: 14px;
+}
+
+.table {
+  background-color: white;
+  width: 100%;
+}
+
+.table tbody tr:nth-child(even) {
+  /*border: 2px solid grey;*/
+  /*border-right: none;
+  border-left: none;
+  border-top: none;*/
+  background-color: #F2F3F4;
+  /*outline: 1px solid grey;*/
+}
+
+td {
+  border: none;
+}
