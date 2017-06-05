@@ -29,18 +29,19 @@
       <input type="text" ng-model="searchFilter" placeholder="Search"  class="searchBox">
     </div>
 
+    <a href="data:text/csv;charset=utf-8,'+escape(csv);" download="file.csv">Download</a>
 
     <div>
       <table class="table">
         <thead>
           <tr>
-              <th ng-click="sortType = 'list.task_completed' ; sortReverse = !sortReverse " style="text-align: center">
+              <th ng-click="sortBy('user', sortReverse)" style="text-align: center">
                 <h4>
                   User
-                  <i ng-show="sortType === 'list.task_completed'" ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
+                  <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'user' " >
                 </h4>
               </th>
-              <th ng-click="sortType = 'list.user' ; sortReverse = !sortReverse " style="text-align: center">
+              <th style="text-align: center">
                 <h4>
                   Text
                   <i ng-show="sortType === 'list.text'" ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
@@ -52,7 +53,7 @@
                   <i ng-show="sortType === 'list.time'" ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
                 </h4>
               </th>
-              <th ng-click="sortType = 'list.text' ; sortReverse = !sortReverse " style="text-align: center">
+              <th style="text-align: center">
                 <h4>
                   Location
                   <i ng-show="sortType === 'list.location' " ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
@@ -61,26 +62,23 @@
               <th ng-click="sortBy('reactions', sortReverse)"  style="text-align: center">
                 <h4>
                   #reactions
-                  <img src="images/down.png" style="width: 20px" ng-show="propertyName === 'reactions' ">
+                  <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'reactions' " >
                 </h4>
               </th>
-              <th ng-click="sortType = 'list.comments' ; sortReverse = !sortReverse " style="text-align: center">
+              <th ng-click="sortBy('comments', sortReverse)" style="text-align: center">
                 <h4>
                   #comments
-                  <i ng-show="sortType === 'list.comments' " ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
+                  <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'comments' " >
                 </h4>
               </th>
-              <th ng-click="sortType = 'list.shares' ; sortReverse = !sortReverse " style="text-align: center">
+              <th ng-click="sortBy('shares', sortReverse)" style="text-align: center">
                 <h4>
                   #shares
-                  <i ng-show="sortType === 'list.shares' " /> <img src="images/down.png" style="width: 20px">
+                  <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'shares' " >
                 </h4>
               </th>
-              <th ng-click="sortType = 'list.Page_URL' ; sortReverse = !sortReverse " style="text-align: center">
-                <h4>
-                  Page Url
-                  <i ng-show="sortType === 'list.Page_URL' " ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
-                </h4>
+              <th>
+                <h4>Page Url</h4>
               </th>
 
           </tr>
@@ -89,17 +87,24 @@
         <tr ng-repeat="list in posts | orderBy:propertyName:sortReverse | filter:searchFilter " style="border-bottom: 1px solid grey" >
 
           <td style="width: 30px"> {{ list.user }} </td>
-          <td dir='rtl' style="width: 50px; overflow: hidden">
-            <div style="height: 100px">
+          <td dir='rtl' style="width: 70px; overflow: hidden">
+            <div id="text+{{$index}}" style="height: 100px; overflow-x: scroll">
               {{ list.text }}
             </div>
+            <div style="height: 15px;">
+              <p id="cta+{{$index}}" style="margin-top: 0px; font-size: 12px"
+
+                  ng-click="viewFullText($index)">
+                  Expand to View Full Text
+              </p>
+            </div>
           </td>
-          <td> {{ list.time }} </td>
-          <td> {{ list.location }} </td>
-          <td> {{ list.reactions }} </td>
-          <td> {{ list.comments }} </td>
-          <td> {{ list.shares }} </td>
-          <td> <a href="{{ list.Page_URL }}" target="_blank"> Click here </a> </td>
+          <td style="text-align: center"> {{ list.time }} </td>
+          <td style="width: 35px"> {{ list.location }} </td>
+          <td style="text-align: center"> {{ list.reactions }} </td>
+          <td style="text-align: center"> {{ list.comments }} </td>
+          <td style="text-align: center"> {{ list.shares }} </td>
+          <td style="text-align: center"> <a href="{{ list.Page_URL }}" target="_blank"> Source URL </a> </td>
         </tr>
       </table>
 

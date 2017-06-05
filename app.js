@@ -8,6 +8,21 @@
   function dashboardController($scope){
     console.log(angular)
     $scope.title = "Omelas Dashboard"
+    $scope.textHeight = {height: "100px", 'overflow-x': "scroll"};
+    $scope.showExpandText = true;
+
+
+    $scope.viewFullText = function(index){
+      var isoDiv = document.getElementById("text+"+index);
+      if(isoDiv.style.height){
+        isoDiv.style = {};
+        document.getElementById("cta+"+index).innerHTML = "Collapse Full Text";
+      } else {
+        isoDiv.style.height = "100px";
+        isoDiv.style.overflowX = "scroll";
+        document.getElementById("cta+"+index).innerHTML = 'Expand to View Full Text';
+      }
+    };
 
     $scope.socialMediaPosts = [
   {
@@ -1123,11 +1138,22 @@
     console.log(sortReverse)
    $scope.sortReverse = !sortReverse;
    $scope.propertyName = propertyName;
+
+   if($scope.sortReverse){
+     $scope.srcUrl = "images/down.png"
+   } else {
+     $scope.srcUrl = "images/up.png"
+   }
+
  };
 
-  console.log(reactions.sort(function(a, b){
-    return a - b
-  }))
+  var csv = $scope.socialMediaPosts
+  var a = document.createElement('a');
+  a.textContent='download';
+  a.download="myFileName.csv";
+  a.href='data:text/csv;charset=utf-8,'+escape(csv);
+  document.body.appendChild(a);
+
 
   };
 
