@@ -29,10 +29,10 @@
       <input type="text" ng-model="searchFilter" placeholder="Search"  class="searchBox">
     </div>
 
-    <a href="data:text/csv;charset=utf-8,'+escape(csv);" download="file.csv">Download</a>
+    <button ng-click="exportCSV()"> Export to CSV </button>
 
     <div>
-      <table class="table">
+      <table class="table" id="sm-table">
         <thead>
           <tr>
               <th ng-click="sortBy('user', sortReverse)" style="text-align: center">
@@ -87,7 +87,7 @@
         <tr ng-repeat="list in posts | orderBy:propertyName:sortReverse | filter:searchFilter " style="border-bottom: 1px solid grey" >
 
           <td style="width: 30px"> {{ list.user }} </td>
-          <td dir='rtl' style="width: 70px; overflow: hidden">
+          <td dir='rtl' style="width: 500px; overflow: hidden">
             <div id="text+{{$index}}" style="height: 100px; overflow-x: scroll">
               {{ list.text }}
             </div>
@@ -104,7 +104,7 @@
           <td style="text-align: center"> {{ list.reactions }} </td>
           <td style="text-align: center"> {{ list.comments }} </td>
           <td style="text-align: center"> {{ list.shares }} </td>
-          <td style="text-align: center"> <a href="{{ list.Page_URL }}" target="_blank"> Source URL </a> </td>
+          <td style="text-align: center"> <a href="{{ list.page_url }}" target="_blank"> Source Url </a> </td>
         </tr>
       </table>
 

@@ -1117,10 +1117,9 @@
 ]
 
   $scope.posts = new Array();
-
   var reactions = new Array();
+  var csv = new Array();
   $scope.socialMediaPosts.forEach(function(post){
-    // console.log(typeof post.reactions)
     var manipulatedPost = {
       user: post.user,
       text: post.text,
@@ -1129,9 +1128,22 @@
       reactions: parseInt(post.reactions),
       comments: parseInt(post.comments),
       shares: parseInt(post.shares),
+      page_url: post.Page_URL
     }
+
     $scope.posts.push(manipulatedPost)
     reactions.push(post.reactions)
+
+    var string = post.user + "; " +
+    // post.text + "; " +
+    post.time + "; " +
+    post.location + "; " +
+    post.reactions + "; " +
+    post.comments + "; " +
+    post.shares + "; " +
+    post.Page_URL + "\n"
+
+
   })
 
   $scope.sortBy = function(propertyName, sortReverse) {
@@ -1147,12 +1159,58 @@
 
  };
 
-  var csv = $scope.socialMediaPosts
-  var a = document.createElement('a');
-  a.textContent='download';
-  a.download="myFileName.csv";
-  a.href='data:text/csv;charset=utf-8,'+escape(csv);
-  document.body.appendChild(a);
+  $scope.exportCSV = function(){
+    var HTMLtable = document.getElementById('sm-table').innerHTML;
+    var table = document.getElementById('sm-table');
+
+    var columnHeaders = table.childNodes[1].childNodes[1].children;
+
+    var headers = ""
+    for(var i = 0; i < columnHeaders.length; i++){
+      if(columnHeaders[i].innerText === "Location"){
+        // headers = headers + "City;Country;"
+        headers = headers + columnHeaders[i].innerText.trim() +";"
+      }  else if (columnHeaders[i].innerText === "Text") {
+
+      } else {
+        headers = headers + columnHeaders[i].innerText.trim() +";"
+      }
+    }
+
+    $scope.tableData = ""
+    var rows = table.childNodes[3].childNodes;
+    for(var r = 0; r < rows.length; r++){
+      var row = rows[r].childNodes;
+      row.forEach(function(td, index){
+        if(td.nodeName === 'TD'){
+          // console.log(td)
+          // console.log(td.childNodes.length)
+          if(td.childNodes.length === 1){
+            // console.log(td.innerHTML)
+
+            $scope.tableData = $scope.tableData + td.innerHTML.trim() + ";"
+          } else if(td.childNodes.length === 5){
+            // console.log(td.childNodes[1].innerText + ";")
+            // $scope.tableData = $scope.tableData + td.childNodes[1].innerText + " END OF ARABIC;"
+            // $scope.tableData = $scope.tableData + td.childNodes[1].innerHTML + "; "
+          } else if(td.childNodes.length === 3){
+            // console.log(td.childNodes)
+            $scope.tableData = $scope.tableData + td.childNodes[1].href + ";"
+          }
+        }
+      })
+        $scope.tableData = $scope.tableData + '\n'
+    }
+
+    var csv = headers.trim() + '\r\n' + $scope.tableData;
+    var a = document.createElement('a');
+    a.textContent='download';
+    a.id = "download"
+    a.download="omeals_filter="+ $scope.searchFilter+ "_date=" + new Date()+".csv";
+    a.href='data:text/csv;charset=utf-8,'+escape(csv);
+    a.click();
+    return headers + '\r' + $scope.tableData
+  }
 
 
   };
