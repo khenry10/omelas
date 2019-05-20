@@ -24,7 +24,8 @@
     <div class="list-header" style="display: flex; justify-content: space-between">
       <div class="left-header">
         <!-- <a href="/"><h1 style="color: white; margin-top: -5px; width: 0px;"></h1></a> -->
-        <img src="images/logo.png" style="width: 70px">
+        <!-- <img src="images/logo.png" style="width: 70px"> -->
+        <h2> Lax Data </h2>
       </div>
       <input type="text" ng-model="searchFilter" placeholder="Search"  class="searchBox">
     </div>
@@ -36,75 +37,48 @@
         <thead>
           <tr>
               <th ng-click="sortBy('user', sortReverse)" style="text-align: center">
-                <h4>
-                  User
+                <h3>
+                  Date
                   <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'user' " >
-                </h4>
+                </h3>
               </th>
               <th style="text-align: center">
-                <h4>
-                  Text
+                <h3>
+                  Home team
                   <i ng-show="sortType === 'list.text'" ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
-                </h4>
+                </h3>
               </th>
               <th ng-click="sortType = 'list.time' ; sortReverse = !sortReverse " style="text-align: center">
-                <h4>
-                  Time
+                <h3>
+                  Away Team
                   <i ng-show="sortType === 'list.time'" ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
-                </h4>
+                </h3>
               </th>
-              <th style="text-align: center">
-                <h4>
-                  Location
-                  <i ng-show="sortType === 'list.location' " ng-class="{ 'fa fa-caret-up': sortReverse, 'fa fa-caret-down': !sortReverse}"/>
-                </h4>
-              </th>
-              <th ng-click="sortBy('reactions', sortReverse)"  style="text-align: center">
-                <h4>
-                  #reactions
-                  <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'reactions' " >
-                </h4>
-              </th>
-              <th ng-click="sortBy('comments', sortReverse)" style="text-align: center">
-                <h4>
-                  #comments
-                  <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'comments' " >
-                </h4>
-              </th>
-              <th ng-click="sortBy('shares', sortReverse)" style="text-align: center">
-                <h4>
-                  #shares
-                  <img ng-src="{{srcUrl}}" style="width: 15px" ng-show="propertyName === 'shares' " >
-                </h4>
-              </th>
-              <th>
-                <h4>Page Url</h4>
-              </th>
-
           </tr>
         </thead>
 
         <tr ng-repeat="list in posts | orderBy:propertyName:sortReverse | filter:searchFilter " style="border-bottom: 1px solid grey" >
 
-          <td style="width: 30px"> {{ list.user }} </td>
-          <td dir='rtl' style="width: 500px; overflow: hidden">
+          <td style="text-align: center" > {{ list.date | date : 'EEEE MMM d yyyy hh a' }} </td>
+          <td style="text-align: center" > {{ list.Home }} </td>
+          <td style="text-align: center"> {{ list.Away }} </td>
+          <!-- <td dir='rtl' style="width: 500px; overflow: hidden">
             <div id="text+{{$index}}" style="height: 100px; overflow-x: scroll">
-              {{ list.text }}
+              {{ list.home }}
             </div>
             <div style="height: 15px;">
-              <p id="cta+{{$index}}" style="margin-top: 0px; font-size: 12px"
+             <p id="cta+{{$index}}" style="margin-top: 0px; font-size: 12px"
 
                   ng-click="viewFullText($index)">
                   Expand to View Full Text
-              </p>
-            </div>
-          </td>
-          <td style="text-align: center"> {{ list.time }} </td>
-          <td style="width: 35px"> {{ list.location }} </td>
+              </p> -->
+            <!-- </div>
+          </td> -->
+          <!-- <td style="width: 35px"> {{ list.location }} </td>
           <td style="text-align: center"> {{ list.reactions }} </td>
           <td style="text-align: center"> {{ list.comments }} </td>
           <td style="text-align: center"> {{ list.shares }} </td>
-          <td style="text-align: center"> <a href="{{ list.page_url }}" target="_blank"> Source Url </a> </td>
+          <td style="text-align: center"> <a href="{{ list.page_url }}" target="_blank"> Source Url </a> </td>  -->
         </tr>
       </table>
 
